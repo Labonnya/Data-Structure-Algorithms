@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool checker(char str[], int start, int curr){
+   for (int i = start; i < curr; i++)
+      if (str[i] == str[curr])
+         return 0;
+   return 1;
+}
+void printPermutations(char str[], int index, int n){
+   if (index >= n) {
+      cout<<str<<endl;
+      return;
+   }
+   for (int i = index; i < n; i++) {
+      bool check = checker(str, index, i);
+      if (check) {
+         swap(str[index], str[i]);
+         printPermutations(str, index + 1, n); // recursive call
+         swap(str[index], str[i]); // backtrack;
+      }
+   }
+}
+int main(){
+   char str[10];
+   cout<<"Enter a string: ";
+   cin>>str;
+   int n = strlen(str);
+   cout<<n<<endl;
+   cout<<"The distinct sorted permutations are : \n";
+   printPermutations(str, 0, n);
+   return 0;
+}
