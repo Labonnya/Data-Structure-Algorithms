@@ -1,0 +1,288 @@
+#include<stdio.h>
+#include<string.h>
+int tree[100],final_tree[100];
+char tree2[100],final_tree2[100];
+int N=0;
+char type;
+void root()
+{
+    if(type=='i')
+
+    {
+        if(tree[0]!='\0')
+        {
+            printf("Root has been set previously\n");
+        }
+        else
+        {
+            printf("Enter the root\n");
+            scanf("%d",&tree[0]);
+            N++;
+        }
+    }
+    if(type=='c')
+    {
+        char x;
+        if(tree2[0]!='\0')
+
+        {
+            printf("Root has been set previously\n");
+        }
+        else
+        {
+            printf("Enter the root\n");
+            scanf("%c",&tree2[0]);
+            N++;
+        }
+    }
+
+}
+void setLeft(int parent,int value)
+{
+    if(tree[parent]!='\0' && tree[parent]!=-1)
+    {
+        N++;
+
+        tree[(parent*2)+1]=value;
+    }
+    else
+        printf("Parent is unavailable\n",parent);
+}
+void setRight(int parent,int value)
+{
+    if(tree[parent]!='\0' && tree[parent]!=-1)
+    {
+        N++;
+
+        tree[(parent*2)+2]=value;
+    }
+    else
+        printf("Parent is unavailable\n",parent);
+}
+void setLeft2(int parent,char value)
+{
+    if(tree2[parent]!='\0' && tree2[parent]!='!')
+    {
+        N++;
+        tree2[(parent*2)+1]=value;
+
+    }
+    else
+        printf("Parent is unavailable\n",parent);
+}
+void setRight2(int parent,char value)
+{
+    if(tree2[parent]!='\0' && tree2[parent]!='!')
+    {
+        N++;
+        tree2[(parent*2)+2]=value;
+
+    }
+    else
+        printf("Parent is unavailable\n",parent);
+}
+int create()
+{
+    if(type=='i')
+    {
+        int parent,value;
+        printf("Set parent index and left child or enter ! for no value\n");
+        scanf("%d %d",&parent,&value);
+        setLeft(parent,value);
+        printf("Set parent index and right child or enter ! for no value\n");
+        scanf("%d %d",&parent,&value);
+        setRight(parent,value);
+    }
+    if(type=='c')
+    {
+        int parent;
+        char value;
+        printf("Set parent index and left child or enter ! for no value\n");
+        scanf("%d %c",&parent,&value);
+        setLeft2(parent,value);
+        printf("Set parent index and right child or enter ! for no value\n");
+        scanf("%d %c",&parent,&value);
+        setRight2(parent,value);
+    }
+
+}
+int Tree()
+{
+    int i;
+    if(type=='i')
+    {
+        for(i=0;i<N;i++)
+        {
+            if(tree[i]=='\0' || tree[i]=='-1')
+            {
+                final_tree[i]=-1;
+            }
+            else
+            {
+                final_tree[i]= tree[i];
+            }
+        }
+    }
+    if(type=='c')
+    {
+        for(i=0;i<N;i++)
+        {
+            if(tree2[i]=='\0' || tree2[i]=='!')
+            {
+                final_tree2[i]='_';
+            }
+            else
+            {
+                final_tree2[i]= tree2[i];
+            }
+        }
+    }
+
+}
+
+int left_value(int value)
+{
+    return (value*2)+1;
+}
+int right_value(int value)
+{
+    return (value*2)+2;
+}
+void pre_order(int root)
+{
+    if(type=='i')
+    {
+        if(final_tree[root]=='\0')
+        {
+            return ;
+        }
+        else
+        {
+            printf("%d",final_tree[root]);
+            printf(" ");
+            pre_order(left_value(root));
+            printf(" ");
+            pre_order(right_value(root));
+            printf(" ");
+        }
+    }
+    if(type=='c')
+    {
+        if(final_tree[root]=='\0')
+        {
+            return ;
+        }
+        else
+        {
+            printf("%c",final_tree2[root]);
+            printf(" ");
+            pre_order(left_value(root));
+            printf(" ");
+            pre_order(right_value(root));
+            printf(" ");
+        }
+    }
+}
+
+void in_order(int root)
+{
+    if(type=='i')
+    {
+        if(final_tree[root]=='\0')
+        return;
+        else
+        {
+            in_order(left_value(root));
+            printf(" ");
+            printf("%d",final_tree[root]);
+            printf(" ");
+            in_order(right_value(root));
+            printf(" ");
+        }
+    }
+    if(type=='c')
+    {
+        if(final_tree[root]=='\0')
+        return;
+        else
+        {
+            in_order(left_value(root));
+            printf(" ");
+            printf("%c",final_tree2[root]);
+            printf(" ");
+            in_order(right_value(root));
+            printf(" ");
+        }
+    }
+}
+
+void post_order(int root)
+{
+      if(type=='i')
+    {
+        if(final_tree[root]=='\0')
+        return;
+        else
+        {
+            post_order(left_value(root));
+            printf(" ");
+            post_order(right_value(root));
+            printf(" ");
+            printf("%d",final_tree[root]);
+            printf(" ");
+        }
+    }
+    if(type=='c')
+    {
+        if(final_tree[root]=='\0')
+        return;
+        else
+        {
+            post_order(left_value(root));
+            printf(" ");
+            post_order(right_value(root));
+            printf(" ");
+            printf("%c",final_tree2[root]);
+            printf(" ");
+        }
+    }
+}
+
+void display()
+{
+    int rt=0;
+    printf("Pre order:\n");
+    pre_order(rt);
+    rt=0;
+    printf("\n\n");
+    printf("In order:\n");
+    in_order(rt);
+    rt=0;
+    printf("\n\n");
+    printf("Post order:\n");
+    post_order(rt);
+}
+int type_selection()
+{
+    printf("Enter c for character array or i for integer array\n");
+    scanf("%c",&type);
+}
+int main()
+{
+    int i,x,c;
+    type_selection();
+
+    root();
+    for(i=1;i<=100;i++)
+    {
+        create();
+        printf("Enter 1 to continue and -1 to break\n");
+        scanf("%d",&c);
+        if(c==-1)
+        {
+            break;
+        }
+    }
+    Tree();
+    display();
+}
