@@ -16,7 +16,7 @@ The code file includes a function that takes an infix expression as input and re
 This data structure represents a collection of nodes linked together, where each node contains data and a reference to the next node.
 The code file provides an implementation of a linked list with operations such as insertion, deletion, and traversal.
 
-#**Tree:**
+# **Tree:**
 
 This data structure represents a hierarchical structure of nodes, where each node can have zero or more child nodes.
 The code file includes an implementation of a tree data structure, along with common operations like insertion, deletion, and traversal.
